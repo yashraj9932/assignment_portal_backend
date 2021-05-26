@@ -30,6 +30,11 @@ const StudentSchema = new mongoose.Schema({
     type: String,
     default: "student",
   },
+  assignmentsLeft: {
+    type: [mongoose.Schema.ObjectId],
+    ref: "Assignment",
+    required: true,
+  },
 });
 
 // Encrypt password using bcrypt

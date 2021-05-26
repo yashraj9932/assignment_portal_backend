@@ -11,9 +11,7 @@ const AssignmentSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add the assignment details"],
   },
-  answerpdf: {
-    type: [String],
-  },
+
   createdAt: {
     type: Date,
     default: Date.now,
@@ -23,11 +21,18 @@ const AssignmentSchema = new mongoose.Schema({
     ref: "Teacher",
     required: true,
   },
-  student: {
-    type: [mongoose.Schema.ObjectId],
-    ref: "Student",
-    required: true,
-  },
+  assignmentSubmitted: [
+    {
+      student: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Student",
+        required: true,
+      },
+      answerpdf: {
+        type: String,
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Assignment", AssignmentSchema);

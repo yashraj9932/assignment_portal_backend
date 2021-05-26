@@ -19,18 +19,27 @@ exports.getAssignments = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAssignment = asyncHandler(async (req, res, next) => {
-  const assignment = await Assignment.findById(req.params.id);
+  const assignment = await Assignment.findById(req.params.id).populate({
+    path: "assignmentSubmitted.student",
+  });
   res.status(200).json({ success: true, data: assignment });
 });
 
 exports.createAssignment = asyncHandler(async (req, res, next) => {
-  console.log(req.teacher);
+  // console.log(req.teacher);
   let teacher = await Teacher.findById(req.teacher.id);
 
   const alist = teacher.assignments;
 
   req.body.teacher = req.teacher.id;
   const assignment = await Assignment.create(req.body);
+
+  // const leftt = assignment._id;
+
+  // const ress = await Student.updateMany(
+  //   { role: "student" },
+  //   { assignmentsLeft: [...assignmentsLeft, leftt] }
+  // );
 
   //   console.log(teacher);
   const fieldsToUpdate = {};
@@ -84,15 +93,16 @@ exports.updateA = asyncHandler(async (req, res, next) => {
       console.error(err);
       return next(new ErrorResponse(`Problem with file upload`, 500));
     }
-    let val = assignment.answerpdf;
-    val.push(file.name);
-    const fieldsToUpdate = {
-      answerpdf: val,
+    let val = assignment.assignmentSubmitted;
+
+    const valls = {
+      student: req.student.id,
+      answerpdf: file.name,
     };
-    let val1 = assignment.student;
-    val1.push(req.student.id);
-    const fieldsTo = {
-      student: val1,
+    val.push(valls);
+
+    const fieldsToUpdate = {
+      assignmentSubmitted: val,
     };
     assignment = await Assignment.findByIdAndUpdate(
       req.params.id,
@@ -102,16 +112,10 @@ exports.updateA = asyncHandler(async (req, res, next) => {
         runValidators: true,
       }
     );
-    assignment = await Assignment.findByIdAndUpdate(req.params.id, fieldsTo, {
-      new: true,
-      runValidators: true,
-    });
     res.status(200).json({
       success: true,
       data: file.name,
       assignment,
     });
   });
-
-  // res.status(201).json({ success: true, msg: assignment });
 });
