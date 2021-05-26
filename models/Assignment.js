@@ -13,11 +13,15 @@ const AssignmentSchema = new mongoose.Schema({
   },
   answerpdf: {
     type: [String],
-    default: "nop.pdf",
   },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  teacher: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Teacher",
+    required: true,
   },
   student: {
     type: [mongoose.Schema.ObjectId],
