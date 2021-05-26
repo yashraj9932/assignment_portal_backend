@@ -35,7 +35,9 @@ exports.addStudent = asyncHandler(async (req, res, next) => {
 //@Acess   Private/Admin
 
 exports.getStudent = asyncHandler(async (req, res, next) => {
-  const student = await Student.findById(req.params.id);
+  const student = await Student.findById(req.params.id).populate({
+    path: "assignmentsLeft",
+  });
 
   if (!student) {
     return next(

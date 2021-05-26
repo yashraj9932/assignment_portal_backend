@@ -34,12 +34,12 @@ exports.createAssignment = asyncHandler(async (req, res, next) => {
   req.body.teacher = req.teacher.id;
   const assignment = await Assignment.create(req.body);
 
-  // const leftt = assignment._id;
+  const leftt = assignment._id;
 
-  // const ress = await Student.updateMany(
-  //   { role: "student" },
-  //   { assignmentsLeft: [...assignmentsLeft, leftt] }
-  // );
+  const ress = await Student.updateMany(
+    { role: "student" },
+    { $push: { assignmentsLeft: leftt } }
+  );
 
   //   console.log(teacher);
   const fieldsToUpdate = {};
@@ -85,6 +85,27 @@ exports.updateA = asyncHandler(async (req, res, next) => {
   }
 
   const file = req.files.file;
+
+  // Make sure the image is a pdf or docx
+  if (!file.mimetype.startsWith("application")) {
+    return next(new ErrorResponse(`Please upload file in correct format`, 400));
+  }
+
+  const student = await Student.findById(req.student.id);
+  const assleft = student.assignmentsLeft;
+  if (assleft.indexOf(req.params.id) === -1) {
+    return next(
+      new ErrorResponse("Assignment has already been submitted", 400)
+    );
+  } else {
+    const leftt = req.params.id;
+
+    const ress = await Student.updateMany(
+      { role: "student" },
+      { $pull: { assignmentsLeft: leftt } }
+    );
+  }
+
   // Create custom filename
   file.name = `pdf_${req.student.id}${path.parse(file.name).ext}`;
 
