@@ -6,6 +6,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const path = require("path");
 
 exports.getAssignments = asyncHandler(async (req, res, next) => {
+  // #swagger.tags=['Assignment']
   let assignments;
   if (!req.params.teacherid) {
     assignments = await Assignment.find();
@@ -19,6 +20,8 @@ exports.getAssignments = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAssignment = asyncHandler(async (req, res, next) => {
+  // #swagger.tags=['Assignment']
+
   const assignment = await Assignment.findById(req.params.id).populate({
     path: "assignmentSubmitted.student",
   });
@@ -26,7 +29,7 @@ exports.getAssignment = asyncHandler(async (req, res, next) => {
 });
 
 exports.createAssignment = asyncHandler(async (req, res, next) => {
-  // console.log(req.teacher);
+  // #swagger.tags=['Assignment']
   let teacher = await Teacher.findById(req.teacher.id);
 
   const alist = teacher.assignments;
@@ -55,6 +58,8 @@ exports.createAssignment = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateQ = asyncHandler(async (req, res, next) => {
+  // #swagger.tags=['Assignment']
+
   let assignment = await Assignment.findById(req.params.id);
   if (!assignment) {
     return next(new ErrorResponse("Assignment does not exist", 404));
@@ -75,6 +80,8 @@ exports.updateQ = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateA = asyncHandler(async (req, res, next) => {
+  // #swagger.tags=['Assignment']
+
   let assignment = await Assignment.findById(req.params.id);
   if (!assignment) {
     return next(new ErrorResponse("Assignment does not exist", 404));

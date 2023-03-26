@@ -8,6 +8,9 @@ const fileupload = require("express-fileupload");
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger_output.json");
+
 //Saare middlewares ko server file mai laake run karna kripya na bhoolein
 
 const app = express();
@@ -30,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/student", student);
 app.use("/teacher", teacher);
 app.use("/assignment", assignment);
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 //This middleware to be always used at the last.
 app.use(errorHandler);

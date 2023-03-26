@@ -9,6 +9,7 @@ const asyncHandler = require("../middleware/async");
 
 exports.getStudents = asyncHandler(async (req, res, next) => {
   const students = await Student.find();
+  // #swagger.tags=['Student']
 
   res.status(200).json({
     success: true,
@@ -24,6 +25,8 @@ exports.getStudents = asyncHandler(async (req, res, next) => {
 exports.addStudent = asyncHandler(async (req, res, next) => {
   const student = await Student.create(req.body);
 
+  // #swagger.tags=['Student']
+
   res.status(201).json({
     success: true,
     msg: student,
@@ -38,6 +41,7 @@ exports.getStudent = asyncHandler(async (req, res, next) => {
   const student = await Student.findById(req.params.id).populate({
     path: "assignmentsLeft",
   });
+  // #swagger.tags=['Student']
 
   if (!student) {
     return next(
@@ -63,6 +67,7 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
   if (req.body.email) {
     fieldsToUpdate.email = req.body.email;
   }
+  // #swagger.tags=['Student']
 
   const student = await Student.findByIdAndUpdate(
     req.params.id,
@@ -84,6 +89,7 @@ exports.updateStudent = asyncHandler(async (req, res, next) => {
 // @access    Private/Admin
 exports.deleteStudent = asyncHandler(async (req, res, next) => {
   await Student.findByIdAndDelete(req.params.id);
+  // #swagger.tags=['Student']
 
   res.status(200).json({
     success: true,
@@ -97,6 +103,7 @@ exports.deleteStudent = asyncHandler(async (req, res, next) => {
 
 exports.studentLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
+  // #swagger.tags=['Student']
 
   if (!email || !password) {
     return next(new ErrorResponse("Please provide an email and password", 404));
