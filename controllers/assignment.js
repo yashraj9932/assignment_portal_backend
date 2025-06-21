@@ -9,16 +9,22 @@ const fs = require("fs");
 exports.getAssignments = asyncHandler(async (req, res, next) => {
   // #swagger.tags=['Assignment']
   let assignments;
-  if (!req.params.teacherid) {
-    assignments = await Assignment.find().populate("teacher", "name");
-  } else {
+  
+  // Check if we have a teacher ID from the route params or from authenticated teacher
+  const teacherId = req.params.teacherid || (req.teacher ? req.teacher.id : null);
+  
+  if (teacherId) {
     console.log(
       "Assignment Controller: Getting assignments for teacher:",
-      req.params.teacherid
+      teacherId
     );
     assignments = await Assignment.find({
-      teacher: req.params.teacherid,
+      teacher: teacherId,
     }).populate("teacher", "name");
+  } else {
+    // If no specific teacher, get all assignments (for students or general view)
+    console.log("Assignment Controller: Getting all assignments");
+    assignments = await Assignment.find().populate("teacher", "name");
   }
 
   console.log("Assignment Controller: Found assignments:", assignments.length);

@@ -163,6 +163,12 @@ exports.updateTeacherProfile = asyncHandler(async (req, res, next) => {
   if (req.body.email) {
     fieldsToUpdate.email = req.body.email;
   }
+  if (req.body.subject) {
+    fieldsToUpdate.subject = req.body.subject;
+  }
+  if (req.body.bio !== undefined) {
+    fieldsToUpdate.bio = req.body.bio;
+  }
   if (req.body.newPassword) {
     // Handle password update logic here
     // You might want to verify current password first
@@ -223,7 +229,7 @@ exports.getTeacherDashboard = asyncHandler(async (req, res, next) => {
           recentSubmissions.push({
             studentName: student.name,
             assignmentTitle: assignment.title,
-            submittedAt: assignment.createdAt, // Using assignment creation date as fallback
+            submittedAt: submission.submittedAt || assignment.createdAt, // Use actual submission date if available
             status: 'submitted' // Default status
           });
         }

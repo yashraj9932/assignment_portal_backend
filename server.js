@@ -20,7 +20,7 @@ connectDB();
 
 // CORS configuration
 app.use(cors({
-  origin: ['http://localhost:4200', 'http://localhost:3000'], // Allow Angular dev server
+  origin: ['http://localhost:4200', 'http://localhost:3000', process.env.FRONTEND_URL], // Allow Angular dev server and production URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
@@ -41,9 +41,19 @@ app.get('/favicon.ico', (req, res) => {
   res.status(204).end(); // No content response
 });
 
-app.use("/student", student);
-app.use("/teacher", teacher);
-app.use("/assignment", assignment);
+// API routes
+app.use("/api/student", student);
+app.use("/api/teacher", teacher);
+app.use("/api/assignment", assignment);
+
+// Serve Angular build files
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/dist/client')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/dist/client/index.html'));
+  });
+}
 
 //This middleware to be always used at the last.
 app.use(errorHandler);

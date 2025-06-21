@@ -22,6 +22,14 @@ const TeacherSchema = new mongoose.Schema({
     // minlength: 6,
     select: false,
   },
+  subject: {
+    type: String,
+    enum: ["Mathematics", "Science", "English", "History", "Computer Science", "Physics", "Chemistry", "Biology", "Literature", "Geography"],
+  },
+  bio: {
+    type: String,
+    maxlength: [500, "Bio cannot be more than 500 characters"],
+  },
   createdAt: {
     type: Date,
     default: Date.now,

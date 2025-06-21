@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "build": "echo 'Backend build completed'",
+    "build:client": "cd client && npm install && npm run build",
+    "build:all": "npm run build:client && npm run build",
+    "start": "node server.js"
   },
   "author": "Yash Raj",
   "license": "ISC",

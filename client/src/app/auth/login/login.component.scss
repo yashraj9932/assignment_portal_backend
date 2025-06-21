@@ -1,0 +1,70 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ede7f6 0%, #fff 100%);
+}
+
+mat-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem 2.5rem 1.5rem 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+    background: #fff;
+}
+
+mat-card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #512da8;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+mat-form-field {
+    margin-bottom: 1.2rem;
+}
+
+button[mat-raised-button] {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #7c4dff 0%, #536dfe 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(124, 77, 255, 0.08);
+    transition: background 0.2s;
+}
+
+button[mat-raised-button]:hover {
+    background: linear-gradient(90deg, #536dfe 0%, #7c4dff 100%);
+}
+
+.error-message {
+    margin-top: 1rem;
+    color: #d32f2f;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.register-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.97rem;
+}
+
+.register-link a {
+    color: #512da8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.register-link a:hover {
+    color: #7c4dff;
+}
