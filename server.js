@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 
 const colors = require("colors");
 const dotenv = require("dotenv");
@@ -20,6 +21,14 @@ dotenv.config({ path: "./config/config.env" });
 
 connectDB();
 
+// CORS configuration
+app.use(cors({
+  origin: ['http://localhost:4200', 'http://localhost:3000'], // Allow Angular dev server
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+}));
+
 const student = require("./routes/student");
 const teacher = require("./routes/teacher");
 const assignment = require("./routes/assigment");
@@ -38,7 +47,7 @@ app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 //This middleware to be always used at the last.
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 const server = app.listen(PORT, () => {
   console.log(

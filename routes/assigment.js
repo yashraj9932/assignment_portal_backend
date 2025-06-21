@@ -6,16 +6,25 @@ const {
   createAssignment,
   getAssignment,
   getAssignments,
+  getStudentAssignments,
   updateA,
   updateQ,
+  getAssignmentSubmissions,
+  deleteAssignment,
 } = require("../controllers/assignment");
 
 const { protect, authorize } = require("../middleware/authT");
 const { protect1, authorize1 } = require("../middleware/authS");
 
-router.route("/").get(getAssignments).post(protect, createAssignment);
+// Temporarily remove authentication for testing
+router.route("/").get(protect1, getAssignments).post(protect, createAssignment);
 
-router.route("/:id").get(getAssignment);
+// Student assignments with submission status
+router.route("/student/dashboard").get(protect1, getStudentAssignments);
+
+router.route("/:id/submissions").get(getAssignmentSubmissions);
+
+router.route("/:id").get(getAssignment).delete(protect, deleteAssignment);
 
 router.route("/updateQ/:id").put(protect, updateQ);
 // .put(protect, authorize("teacher", "admin"), updateQ);

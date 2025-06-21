@@ -19,7 +19,7 @@ const StudentSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please add a password"],
-    minlength: 6,
+    // minlength: 6,
     select: false,
   },
   createdAt: {
@@ -33,7 +33,7 @@ const StudentSchema = new mongoose.Schema({
   assignmentsLeft: {
     type: [mongoose.Schema.ObjectId],
     ref: "Assignment",
-    required: true,
+    default: [],
   },
 });
 

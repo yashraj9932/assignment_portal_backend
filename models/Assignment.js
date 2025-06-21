@@ -7,9 +7,37 @@ const AssignmentSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add a title"],
   },
-  details: {
+  description: {
     type: String,
-    required: [true, "Please add the assignment details"],
+    required: [true, "Please add the assignment description"],
+  },
+  dueDate: {
+    type: Date,
+  },
+  subject: {
+    type: String,
+  },
+  questions: [{
+    text: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      default: 'text'
+    },
+    points: {
+      type: Number,
+      default: 10
+    }
+  }],
+  answers: [{
+    type: String,
+  }],
+  status: {
+    type: String,
+    enum: ['draft', 'active', 'pending', 'completed', 'overdue'],
+    default: 'draft',
   },
 
   createdAt: {
@@ -30,6 +58,10 @@ const AssignmentSchema = new mongoose.Schema({
       },
       answerpdf: {
         type: String,
+      },
+      submittedAt: {
+        type: Date,
+        default: Date.now,
       },
     },
   ],

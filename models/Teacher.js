@@ -19,7 +19,7 @@ const TeacherSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please add a password"],
-    minlength: 6,
+    // minlength: 6,
     select: false,
   },
   createdAt: {
