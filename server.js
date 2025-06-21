@@ -9,9 +9,6 @@ const fileupload = require("express-fileupload");
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("./swagger_output.json");
-
 //Saare middlewares ko server file mai laake run karna kripya na bhoolein
 
 const app = express();
@@ -39,10 +36,14 @@ app.use(fileupload());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+// Favicon route to prevent 500 errors
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end(); // No content response
+});
+
 app.use("/student", student);
 app.use("/teacher", teacher);
 app.use("/assignment", assignment);
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 //This middleware to be always used at the last.
 app.use(errorHandler);

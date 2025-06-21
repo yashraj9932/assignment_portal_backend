@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server",
-    "swagger-autogen": "node swagger.js"
+    "dev": "nodemon server"
   },
   "author": "Yash Raj",
   "license": "ISC",
@@ -19,9 +18,7 @@
     "express-fileupload": "^1.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.11",
-    "nodemon": "^2.0.7",
-    "swagger-autogen": "^2.23.1",
-    "swagger-ui-express": "^4.6.2"
+    "nodemon": "^2.0.7"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
